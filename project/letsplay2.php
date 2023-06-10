@@ -1,0 +1,260 @@
+<?php 
+  session_start(); 
+
+  if (!isset($_SESSION['username'])) {
+  	$_SESSION['msg'] = "You must log in first";
+  	header('location: login.php');
+  }
+  if (isset($_GET['logout'])) {
+  	session_destroy();
+  	unset($_SESSION['username']);
+  	header("location: home.html");
+  }
+?>
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+  <title>PSYCUBE-Lets Play</title>
+</head>
+
+<body style="background-color: powderblue;">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="/">PSYCUBE</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent" style="background-color: rgb(13, 154, 172);">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="home2.html" style="color: black;">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item active">
+
+            <a class="nav-link" href="letsplay2.php" style="color: black;">Lets Play</a>
+        </li>
+        <li class="nav-item">
+
+          <a class="nav-link" href="faqs2.php" style="color: black;">FAQs</a>
+        </li>
+        <li class="nav-item">
+
+            <a class="nav-link" href="myprofile.html" style="color: black;">My Profile</a>
+        </li>
+
+        <li class="nav-item">
+                <?php  if (isset($_SESSION['username'])) : ?>
+    	
+        <a href="home.html?logout='1'" style="color: black;">Logout</a> 
+   <?php endif ?>
+</li>
+    
+
+      </ul>
+    </div>
+  </nav>
+
+  <div class="container mt-3" style="background-color: black;">
+    <div class="jumbotron" style="background-color: rgb(13, 154, 172);">
+      <h1 class="display-4">Welcome to PSYCUBE</h1>
+      <p class="lead">A Simple and Easy approach to Solving Rubik's Cube.</p>
+      <hr class="my-4">
+      <p>It uses the Simple beginner's Approach to solve the Rubik's Cube Layer-By-Layer.</p>
+      <div>
+        <div id="rotbtncontainer"></div>
+        <div id="invrotbtncontainer"></div>
+        <div id="doublerotbtncontainer"></div>
+        <div id="specialbtncontainer"></div>
+        <div>
+            <div> 
+                <label for="seedvalue">RNG seed value</label>
+                <input value="0" type="number" id="seedvalue">
+            </div>
+            <div>
+                <label for="perspectiveSelect">Select perspective</label>
+                <select id="perspectiveSelect">
+                    <option value="F">F</option>
+                    <option value="B">B</option>
+                    <option value="R">R</option>
+                    <option value="L">L</option>
+                    <option value="U">U</option>
+                    <option value="D">D</option>
+                    <option value="I">I</option>
+                </select>
+            </div>
+        </div>
+        <div style="color:red;" id="erroroutput"></div>
+        <textarea rows="10" cols="70" id="outputinput"></textarea>
+        <script src="https://cdn.jsdelivr.net/npm/quaternion@1.2.1/quaternion.js"></script>
+        <script src="package.js"></script>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="container mt-3" style="background-color: black;">
+    <div class="jumbotron" style="background-color: rgb(13, 154, 172);">
+      <section>
+        <div id="tutorial" style="min-height: 721px;">
+          <div class="sectionInfo">
+            <h2>How to solve the Rubik's&nbsp;Cube</h2>
+            <p>The beginner's solution guide with images and easy to follow instructions.</p>
+            <p>Stuck somewhere and don't know how to progress ? <a href="stuck2.php" style="color: white;">Click here...</a></p>
+          </div>
+          <div class="grid" style="position: relative; height: 4371.1px;">
+            <div class="grid-item" style="position: absolute; left: 0px; top: 0px;">
+              <div>
+                <p>Knowing how to solve the Rubik's Cube is an amazing skill and it's not so hard to learn if you are patient. You'll realize that you don't have to be a genius to get it done.</p>
+                <p>In this tutorial we are going to use the easiest layer-by-layer method.</p>
+              </div>
+            </div>
+            <div class="grid-item" style="position: absolute; left: 0px; top: 90px;"><span>1)</span>
+              <div>
+                <div>
+                  <h3>White Edges</h3>
+                  <p>Let's start with the white face. Try to form a plus sign on the top of the cube, matching the colors of the side stickers to the colors of the lateral centers. This step shouldn't be too hard, try to do this without reading the examples below.</p>
+                  <div class="centeralign"><img src="img/ok-bad-white-edges.png" alt="white edges correct way" width="250" height="110"></div>
+                  <p>We can easily insert the edge to the top if you move it to the highlighted bottom-front spot first. Depending on where the white sticker is facing do the rotations.</p>
+                  <div class="centeralign"><img src="img/insert-first-edge.png" alt="insert first edge" width="400" height="93"></div>
+                  <table class="fullwidth">
+                    <tbody>
+                      <tr>
+                        <td><strong>A</strong> - white sticker facing down:</td>
+                        <td><span class="algo"><span class="f">F</span><span class="f">F</span></span></td>
+                      </tr>
+                      <tr>
+                        <td><strong>B</strong> - white sticker at the bottom:</td>
+                        <td><span class="algo"><span class="d">D</span><span class="r">R</span><span class="fi">F'</span><span class="ri">R'</span></span></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <p>When the white edge is stuck between two solved edges (last image) you can send it to the bottom layer doing this:</p>
+                  <div class="centeralign"><span class="algo"><span class="l">L</span><span class="d">D</span><span class="li">L'</span></span></div>
+                  <p><img class="floatRight" src="img/face-rotations.png" alt="face rotation letters" width="100" height="100">I used capital letters to mark the clockwise face rotations: <strong>F</strong>&nbsp;(front), <strong>R</strong>&nbsp;(right), <strong>L</strong>&nbsp;(left), <strong>U</strong>&nbsp;(up), <strong>D</strong>&nbsp;(down). </p>
+                  <p>Turns in the opposite direction are marked with an apostrophe.</p>
+                  <a class="moreLink" target="_blank" rel="nofollow" href="https://ruwix.com/the-rubiks-cube/how-to-solve-the-rubiks-cube-beginners-method/step-1-first-layer-edges/" style="color: white;">Examples</a>
+                </div>
+              </div>
+            </div>
+            <div class="grid-item" style="position: absolute; left: 0px; top: 790px;"><span>2)</span>
+              <div>
+                <div>
+                  <h3>Finish The White Face</h3>
+                  <p><img class="floatRight" src="img/cube-white-corners.png" alt="solve cube white corners" width="130" height="130">When the white edges are matching we can move on to solve the white coners.</p>
+                  <p>First put the white corner that belongs to the spot marked with the upper arrow in either of the highlighted positions. Next repeat the algorithm below until the white piece comes to its desired destination.</p>
+                  <p class="centeralign"><span class="algo"><span class="ri">R'</span><span class="di">D'</span><span class="r">R</span><span class="d">D</span></span></p>
+                  <p>This trick sends the piece back and forth between the top and bottom locations, <img class="floatRight" src="img/solved-white.png" alt="solved white face" width="90" height="90">twisting the corner in each step. Using this you can solve each white corner in less than 6 iterations.</p>
+                  <p>At the end your cube should have a solid white face with the lateral stickers matching the lateral centers.</p>
+                  <a class="moreLink" target="_blank" rel="nofollow" href="https://cubesolve.com/" style="color: white;">Examples</a>
+                </div>
+              </div>
+            </div>
+            <div class="grid-item" style="position: absolute; left: 0px; top: 1312px;"><span>3)</span>
+              <div>
+                <div>
+                  <h3>Center Layer</h3>
+                  <p>Turn your cube upside down because we don't need to work with the white face anymore. We can insert an edge piece from the top-front position to the middle layer using a trick. Do the left or right algorithm depending on which side you have to insert the piece: </p>
+                  <p class="centeralign"><img src="img/center-layer.png" alt="how to do center layer" width="250" height="114"></p>
+                  <table class="fullwidth">
+                    <tbody>
+                      <tr>
+                        <td><strong>Left:&nbsp; </strong></td>
+                        <td><span class="algo"><span class="ui">U'</span><span class="li">L'</span><span class="u">U</span><span class="l">L</span><span class="u">U</span><span class="f">F</span><span class="ui">U'</span><span class="fi">F'</span></span></td>
+                      </tr>
+                      <tr>
+                        <td><strong>Right:&nbsp; </strong></td>
+                        <td><span class="algo"><span class="u">U</span><span class="r">R</span><span class="ui">U'</span><span class="ri">R'</span><span class="ui">U'</span><span class="fi">F'</span><span class="u">U</span><span class="f">F</span></span></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <p><img class="floatRight" src="img/solved-center.png" alt="solved center layer" width="90" height="90">When a center layer piece is in a wrong position you can use the same trick to take it out. </p>
+                  <p>You'll have two solved layers when you finish this stage. We're almost&nbsp;there.</p>
+                  <a class="moreLink" target="_blank" rel="nofollow" href="https://cubesolve.com" style="color: white;">More...</a>
+                </div>
+              </div>
+            </div>
+            <div class="grid-item" style="position: absolute; left: 0px; top: 1969px; height: auto !important; min-height: 0px !important;"><span><em></em></span>
+              <div style="height: auto !important;">
+                <div style="height: auto !important;">
+                  <div class="marginBottom40">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="grid-item" style="position: absolute; left: 0px; top: 1799px;"><span>4)</span>
+              <div>
+                <div>
+                  <h3>Yellow Cross</h3>
+                  <p>Inspect the top of your cube. You see a yellow cross, a line, an L-shape or a dot. Our goal is to form a yellow cross.</p> 
+                  <div class="centeralign"><img src="img/how-to-solve-rubiks-cube.png" alt="how to solve the rubiks cube" width="400" height="82"></div>
+                  <p class="centeralign"><span class="algo"><span class="f">F</span><span class="r">R</span><span class="u">U</span><span class="ri">R'</span><span class="ui">U'</span><span class="fi">F'</span></span></p>
+                  <p>Use this algorithm to shift from one state to the other.</p>
+                  <a class="moreLink" target="_blank" rel="nofollow" href="https://ruwix.com/the-rubiks-cube/how-to-solve-the-rubiks-cube-beginners-method/step-4-yellow-cross/" style="color: white;">More...</a>
+                </div>
+              </div>
+            </div>
+            <div class="grid-item" style="position: absolute; left: 0px; top: 2100px;"><span>5)</span>
+              <div>
+                <div>
+                  <h3>Swap Edges</h3>
+                  <p>We have a yellow cross on the top but the edges are not in their final position. They need to match the side colors.</p>
+                  <div class="centeralign"><img src="img/swap-yellow-edges.png" alt="swap rubiks cube edges" width="140" height="140"></div>
+                  <p class="centeralign"><span class="algo"><span class="r">R</span><span class="u">U</span><span class="ri">R'</span><span class="u">U</span><span class="r">R</span><span class="u">U</span><span class="u">U</span><span class="ri">R'</span><span class="u">U</span></span></p>
+                  <p>Use this to swap the front and left yellow edges in the top layer.</p>
+                </div>
+              </div>
+            </div>
+            <div class="grid-item" style="position: absolute; left: 0px; top: 2421px;"><span>6)</span>
+              <div>
+                <div>
+                  <h3>Cycle Corners</h3>
+                  <p>Only the yellow corners are left unsolved at this point. Now we are going to put them in their final position and we'll rotate them in the last step.</p>
+                  <p>Use the algorithm below to cycle the pieces in the direction marked with the arrows while the top-right-front piece is standing still.</p>
+                  <div class="centeralign"><img src="img/cycle-rubiks-cube-algorithm.png" alt="cycle rubik algorithm" width="150" height="150"></div>
+                  <div class="centeralign"><span class="algo"><span class="u">U</span><span class="r">R</span><span class="ui">U'</span><span class="li">L'</span><span class="u">U</span><span class="ri">R'</span><span class="ui">U'</span><span class="l">L</span></span></div>
+                </div>
+              </div>
+            </div>
+            <div class="grid-item" style="position: absolute; left: 0px; top: 2739px;"><span>7)</span>
+              <div>
+                <div>
+                  <h3>Orient Corners</h3>
+                  <p>Everything is positioned, we just have to orient the yellow corners. We use the same algorithm that we used for solving the white corners in the second step:</p>
+                  <p class="centeralign"><span class="algo"><span class="ri">R'</span><span class="di">D'</span><span class="r">R</span><span class="d">D</span></span></p>
+                  <p>This step can be confusing for most people so read the explanation very carefully and do exactly what it says!</p>
+                  <p><img src="img/rotate-final-pieces.png" alt="rotate pieces rubiks cube solution" class="floatRight" width="120" height="120">1. Hold the cube in your hand having an unsolved yellow corner in the highlighted top-right-front position. <br>
+                  2. Repeat the algorithm until this piece is solved.<br>
+                  3. Turn the top layer to bring another unsolved piece in the highlighted position.<br>
+                  4. Repeat <strong>R' D' R D</strong> until that one is also solved.<br>
+                  5. Do 3 and 4 for any other unsolved yellow corner.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      <section>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
+</body>
+
+</html>

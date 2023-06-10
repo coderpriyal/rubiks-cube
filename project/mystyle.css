@@ -1,0 +1,105 @@
+body {
+  background-color: rgb(212, 241, 249);
+}
+
+.sidebar {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color:rgba(13, 57, 90, 0.85);
+  overflow-x: hidden;
+  transition: 0.5s;
+}
+
+.sidebar a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: white;
+  display: block;
+  transition: 0.3s;
+}
+
+.sidebar a:hover {
+  color: #855c5c;
+}
+
+.sidebar .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+.openbtn {
+  font-size: 20px;
+  cursor: pointer;
+  background-color:rgba(13, 57, 90, 0.85);
+  color:white;
+  top: 0;
+  height: 11%;  
+  position: fixed;
+}
+
+.openbtn:hover {
+  background-color: #444;
+}
+#main {
+  transition: margin-left .5s;
+}
+
+h1 {
+  color: rgba(13, 57, 90, 0.85);
+  text-align: left;
+}
+
+p {
+  color: rgb(21, 1, 1);   
+}
+
+ ul{
+  text-align:center;
+  float: right;
+  display: block;
+}
+
+.transition {
+  -webkit-transition: all .5s ease-in-out;
+  transition: all .5s ease-in-out;
+}
+
+
+.active{
+  float: right;
+  color: #000000;
+  margin-right: 15px;
+}
+ 
+li a {
+  display: block;
+  color: blue;
+  font-size:20px;
+  text-align: center;
+  padding: 10px 20px;
+  text-decoration: none;
+}
+
+a:hover{
+  color: #496868;
+
+}
+
+.gif {
+  position: relative;
+  height: 100vh;
+  width: 100%;
+  background: url("the-simpsons-homer.gif") no-repeat center center scroll;
+  background-size: cover;
+  float: left;
+  -webkit-animation: bgslide 2.3s forwards;
+          animation: bgslide 2.3s forwards;
+}
